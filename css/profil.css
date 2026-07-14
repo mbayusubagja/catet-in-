@@ -1,0 +1,87 @@
+
+/* ================ profil card ================== */
+
+.profil-card{
+  background:var(--cardMenu);
+  border-radius:12px;
+  padding:16px;
+  box-shadow:0 2px 8px rgba(0,0,0,.08);
+}
+
+.profil-card .header h2{
+  margin:0;
+  font-size:20px;
+}
+
+.profil-item{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding: 10px 5px 10px 5px;
+  border-bottom:1px solid #eee;
+}
+
+.profil-item:last-child{
+  border-bottom:none;
+}
+
+.label{
+  color:var(--text);
+  font-weight:500;
+}
+
+.value{
+  font-weight:600;
+  text-align:right;
+  margin-left: 15px;
+}
+
+.btnProfile{
+  font-size: 12px;
+  padding: 6px 10px;
+  border: none;
+  border-radius: 8px;
+  background: var(--button);
+  color: var(--text);
+  cursor: pointer;
+}
+
+body{
+  background:var(--bg);
+  color:var(--text);
+}
+
+.card-notice{
+  background:#D6EEFF;
+  color: #333;
+  border-radius:12px;
+  padding:16px;
+  box-shadow:0 2px 8px rgba(0,0,0,.08);
+  margin-bottom: 10px;
+}
+
+.logoutBtn{
+  width:100%;
+  padding:14px;
+  border:none;
+  border-radius:8px;
+  background:#C75B5B;
+  color:white;
+  font-size:15px;
+  font-weight:bold;
+}
+
+.logoutBtn:hover, .editBtn:hover {
+  background-color: var(--text);
+}
+
+.editBtn{
+  width:100%;
+  padding:14px;
+  border:none;
+  border-radius:8px;
+  background:var(--button);
+  color:var(--textButton);
+  font-size:15px;
+  font-weight:bold;
+}

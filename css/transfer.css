@@ -1,0 +1,78 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
+
+select,
+input,
+textarea{
+  width:100%;
+  padding:14px;
+  border:1px solid var(--border);
+  border-radius:8px;
+  margin-top:8px;
+  margin-bottom:16px;
+  font-size:15px;
+  background:var(--cardInput);
+  color: var(--text);
+}
+
+textarea{
+  min-height:90px;
+  resize:none;
+}
+
+label{
+  font-size:14px;
+  font-weight:600;
+}
+
+.primaryBtn{
+  width:100%;
+  border:none;
+  background:var(--button);
+  color:var(--textButton);
+  padding:12px;
+  border-radius:8px;
+  font-size:15px;
+  font-weight:600;
+  cursor:pointer;
+  margin-top:10px;
+}
+
+.card .header h2 {
+  margin: 0;
+}
+
+.card .header p {
+  margin: 0;
+  margin-top: 10px;
+}
+
+.primaryBtn:hover{
+  opacity:0.92;
+}
+
+.card {
+  margin-bottom: 16px;
+  padding: 20px;
+}
+
+.btnBack{
+background:var(--textSecondary);
+color:white;
+border:none;
+padding:12px;
+border-radius:8px;
+width:100%;
+font-weight:600;
+cursor:pointer;
+font-size: 15px;
+}
+
+.btnBack:hover {
+  background-color: var(--text);
+}

@@ -1,0 +1,206 @@
+:root{
+  --bg:#f2f2ef;
+  --card:#f7f7f5;
+  --text:#272723;
+  --textButton:#f7f7f7;
+  --primary:#ffffff;
+  --cardMenu:#ffffff;
+  --button:#272723;
+  --buttonHover:#f9f8f6;
+  --borderButton:#e7e5e4;
+  --cardList: #f7f7f7;
+  --cardImport: #e0e0e0;
+  --textPreview: #777;
+  --border:#e7e6e1;
+  --shadow: rgba(0,0,0,.03);
+  --textSecondary:#8e8e8c;
+  --cardInput:#fcfcfb;
+  --borderTransaksi: #e7e6e1;
+  --cardSummaryMasuk:#f7f7f7;
+  --cardSummaryKeluar:#f7f7f7;
+
+}
+
+.dark{
+  --bg:#0b0b0b;
+  --card:#141414;
+  --text:#f5f5f5;
+  --textButton:#15120b;
+  --primary:#1e1e1e;
+  --cardMenu:#1e1e1e;
+  --button:#f5f5f5;
+  --buttonHover:#202020;
+  --borderButton:#2E2E2E;
+  --cardList: #1d1d1d;
+  --cardImport: #666;
+  --textPreview: #aaa;
+  --border:none;
+  --shadow: none;
+  --textSecondary:#a8a8a8;
+  --cardInput:#1d1d1d;
+  --borderTransaksi: #444;
+  --cardSummaryMasuk:#1d1d1d;
+  --cardSummaryKeluar:#1d1d1d;
+}
+
+body{
+  background:var(--bg);
+  color:var(--text);
+  padding:20px;
+  font-family:'Inter', sans-serif;
+  padding-bottom: 90px;
+}
+
+.container{
+  max-width:500px;
+  margin:auto;
+}
+
+.card{
+  background:var(--card);
+  padding:16px;
+  border-radius:10px;
+  box-shadow: 0 1px 2px var(--shadow);  
+  border:1px solid var(--border);
+}
+
+input{
+  width:100%;
+  padding:10px;
+  margin:8px 0;
+  border-radius:8px;
+  box-sizing:border-box;
+}
+
+#kategori, #nominal, #catatan, #sumberDana {
+  background: var(--cardInput);
+  border:1px solid var(--border);
+  color: var(--text);
+}
+
+
+
+button{
+  width:100%;
+  padding:12px;
+  background:var(--button);
+  color:var(--textButton);
+  border:none;
+  border-radius:8px;
+  cursor:pointer;
+  display:block;
+  margin-top:10px;
+}
+
+button:hover{
+  background:var(--buttonHover);
+  transform:translateY(-2px);
+}
+
+button:active{
+  transform:translateY(0);
+}
+
+button:disabled{
+  background:#999;
+  cursor:not-allowed;
+}
+
+#footer{
+  text-align:center;
+  margin-top:20px;
+  color:#777;
+  font-size:14px;
+}
+
+/* ================= LOADING ================= */
+
+.loadingImport{
+
+    position:fixed;
+
+    inset:0;
+
+    background:rgba(0,0,0,.45);
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    z-index:9999;
+
+}
+
+.loadingImport.hidden{
+
+    display:none;
+
+}
+
+.loadingBox{
+
+    background:var(--card);
+
+    color:var(--text);
+
+    padding:28px;
+
+    border-radius:16px;
+
+    text-align:center;
+
+    width:280px;
+
+    box-shadow:0 12px 30px rgba(0,0,0,.18);
+
+}
+
+.spinner{
+
+    width:44px;
+
+    height:44px;
+
+    margin:0 auto 18px;
+
+    border:4px solid #e5e7eb;
+
+    border-top-color:#2563eb;
+
+    border-radius:50%;
+
+    animation:putar .8s linear infinite;
+
+}
+
+#btnSimpan {
+  background: var(--button);
+  color: var(--textButton);
+  font-weight: bold;
+  font-size: 15px;
+}
+
+@keyframes putar{
+    to{
+        transform:rotate(360deg);
+    }
+}
+
+@media (max-width:350px){
+
+  body {
+    padding: 20px 15px 90px 15px;
+  }
+
+}
+
+@media (max-width:375px){
+
+  body {
+    padding: 20px 15px 90px 15px;
+  }
+
+
+}

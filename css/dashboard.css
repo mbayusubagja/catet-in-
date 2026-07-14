@@ -1,0 +1,583 @@
+.header{
+  background:var(--card);
+  color:var(--text);
+  padding:20px;
+  border-radius:16px;
+  margin-bottom: 16px;
+  border:1px solid var(--border);
+  box-shadow: 0 1px 2px var(--shadow);
+}
+
+body{
+  margin: 0;
+  background:var(--bg);
+}
+
+.header h2 {
+  margin-bottom: 40px;
+  margin-top: 5px;
+  font-size: 40px;
+}
+
+.header p {
+  margin-top: 5px;
+}
+
+.appTitle{
+  display:flex;
+  align-items:right;
+  gap:10px;
+}
+
+.logoDashboard{
+  width:40px;
+  height:40px;
+  object-fit:contain;
+}
+
+.appText{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-direction:column;
+  line-height:1.1;
+  font-size: 30px;
+  font-weight: bold;
+}
+
+.card{
+  background:var(--card);
+  border-radius:16px;
+  padding:16px;
+  margin-bottom:16px;
+  border:1px solid var(--border);
+  box-shadow: 0 1px 2px var(--shadow);  
+}
+
+.card-saldo{
+  background:var(--cardList);
+  border-radius:14px;
+  padding:16px;
+  margin-bottom:16px;
+  margin-top: 10px;
+  margin-bottom: 0;
+  border:1px solid var(--border);
+  box-shadow: 0 1px 2px var(--shadow);
+}
+
+.saldo{
+  font-size:25px;
+  font-weight:bold;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.menu{
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(140px,1fr));
+  gap:12px;
+}
+
+
+
+.menu button{
+  padding:16px;
+  border:1px solid var(--borderButton);
+  border-radius:8px;
+  background:var(--button);
+  color:var(--textButton);
+  font-size:15px;
+  cursor:pointer;
+  transition:0.2s;
+}
+
+.menu button:hover{
+  opacity:0.9;
+  transform:translateY(-2px);
+}
+
+.menu button:active{
+  transform:scale(0.98);
+}
+
+.menu .card {
+  margin-bottom: 0;
+}
+
+.logoutBtn{
+  width:100%;
+  padding:14px;
+  border:none;
+  border-radius:8px;
+  background:#C75B5B;
+  color:white;
+  font-size:15px;
+  font-weight:bold;
+}
+
+.transaksiItem{
+  padding:12px 0;
+  border-bottom:1px solid var(--borderTransaksi);
+}
+
+.transaksiHeader{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+}
+
+.transaksiHeader > div:first-child{
+  flex:1;
+  min-width:0;
+}
+
+.transaksiHeader strong{
+  display:-webkit-box;
+  -webkit-line-clamp:2;
+  -webkit-box-orient:vertical;
+  overflow:hidden;
+  white-space:normal;
+  color: var(--text);
+}
+
+.nominal{
+  font-weight:bold;
+  flex-shrink:0;
+}
+
+.jenis{
+  font-size:13px;
+  color:var(--textSecondary);
+  margin-top:4px;
+}
+
+.kosong{
+  text-align:center;
+  color:var(--textSecondary);
+  padding:20px;
+}
+
+.menuList {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.hidden {
+  display: none;
+}
+
+.menuToggle {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  cursor: pointer;
+}
+
+.menuList button {
+  width: 100%;
+}
+
+.tanggal{
+  font-size: 12px;
+  color: var(--textSecondary);
+  margin-top: 4px;
+}
+
+.btnHapus{
+  width: auto;
+  margin-left: auto;
+  margin-top: 12px;
+  padding: 0;
+  font-size: 12px;
+  border: none;
+  border-radius: 8px;
+  background: none;
+  color: white;
+  cursor: pointer;
+}
+
+.btnHapus:hover{
+  background: none;
+}
+
+.loading{
+  text-align:center;
+  padding:20px;
+  color:#666;
+}
+
+.ringkasanBulan{
+  display:flex;
+  gap:12px;
+}
+
+.itemRingkasan{
+  flex:1;
+  min-width:0; /* penting */
+  background:var(--cardList);
+  padding:10px;
+  border-radius:8px;
+  box-shadow: 0 6px 20px var(--shadow);
+  border:1px solid var(--border);
+}
+
+.itemRingkasan span {
+  font-size: 12px;
+  color: var(--textSecondary);
+}
+
+.itemRingkasan strong{
+  color:white;
+  font-size:clamp(13px, 3.5vw, 15px);
+  font-weight:600;
+}
+
+#totalMasukBulan{
+  color:var(--text);
+}
+
+#totalKeluarBulan{
+  color:var(--text);
+}
+
+.headerTop{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:8px;
+}
+
+.keepLoginBox{
+  display:flex;
+
+  align-items:center;
+  gap:10px;
+  font-size:11px;
+  color:var(--text);
+  font-weight:500;
+  padding: 20px;
+  padding-right: 0;
+}
+
+.switch{
+  position:relative;
+  display:inline-block;
+  width:44px;
+  height:24px;
+}
+
+.switch input{
+  opacity:0;
+  width:0;
+  height:0;
+}
+
+.slider{
+  position:absolute;
+  inset:0;
+  cursor:pointer;
+  background:var(--button);
+  border-radius:999px;
+  transition:.25s;
+}
+
+.slider:before{
+  content:"";
+  position:absolute;
+  width:18px;
+  height:18px;
+  left:3px;
+  top:3px;
+  background:var(--textButton);
+  border-radius:50%;
+  transition:.25s;
+}
+
+.switch input:checked + .slider{
+  background:#22c55e;
+}
+
+.switch input:checked + .slider:before{
+  transform:translateX(20px);
+}
+
+/* ============== dark mode ==================== */
+
+
+.settingBox{
+  display:flex;
+  align-items:center;
+  gap:4px;
+}
+
+.rememberText{
+  font-size:12px;
+  white-space:nowrap;
+  color: var(--textSecondary);
+}
+
+.themeBtn{
+  width:28px;
+  height:28px;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  border:none;
+  border-radius:50%;
+  cursor:pointer;
+  margin:auto;
+}
+
+.themeBtn:hover{
+  transform:scale(1.05);
+}
+
+.dark .themeBtn{
+  background:#2a2a2a;
+}
+
+/* kredit */
+.infoKredit{
+  margin-top:6px;
+  text-align:center;
+  font-size:11px;
+  color:var(--danger);
+  opacity:.9;
+}
+
+#userInfo {
+  color: var(--textSecondary);
+}
+
+@media (max-width:350px){
+
+  body {
+    padding: 20px 15px 90px 15px;
+  }
+
+  .appText {
+    font-size: 16px;
+  }
+
+  .rememberText {
+    display: none;
+  }
+
+}
+
+@media (max-width:375px){
+
+  body {
+    padding: 20px 15px 90px 15px;
+  }
+
+  .appText {
+    font-size: 16px;
+  }
+
+  .rememberText {
+    display: none;
+  }
+
+}
+
+@media (max-width:450px){
+
+
+  .appText {
+    font-size: 20px;
+  }
+
+  .rememberText {
+    font-size: 10px;
+  }
+
+}
+
+/* ======== dot =========== */
+.dot{
+  display: inline-block; /* Tampilkan default dot */
+  height: 8px;
+  width: 8px;
+  background-color: #f44336;
+  border-radius: 50%;
+  animation: pulse 1.2s infinite;
+  margin-right: 5px;
+}
+
+@keyframes pulse{
+  0%{
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(255,59,48,.7);
+  }
+
+  70%{
+    transform: scale(1.1);
+    box-shadow: 0 0 0 10px rgba(255,59,48,0);
+  }
+
+  100%{
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(255,59,48,0);
+  }
+}
+
+/* ==================== btn eye ================ */
+.saldoHeader{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-top: -10px;
+}
+
+.btnEye{
+  display:flex;
+  align-items:center;
+  justify-content:right;
+  margin-top: 0;
+
+  width:32px;
+  height:32px;
+
+  padding:0;
+
+  border:none;
+  border-radius:50%;
+
+  background:transparent;
+  color:var(--text);
+
+  cursor:pointer;
+
+  -webkit-tap-highlight-color: transparent;
+}
+
+.btnEye:hover{
+  background:none;
+}
+
+.dark .btnEye:hover{
+  background:none;
+}
+
+.btnEye:focus{
+  outline:none;
+}
+
+.labelSaldo{
+  font-size:12px;
+  color:var(--textSecondary);
+  align-items: center;
+}
+
+/* =============== telegram ==================== */
+.telegramButton{
+  background:var(--button);
+  color:var(--text);
+  border-radius:50%;
+  padding:0;
+  width:32px;
+  height:32px;
+  margin:auto;
+}
+
+.themeBtn{
+  width:32px;
+  height:32px;
+  margin: auto;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  border:none;
+  border-radius:50%;
+  cursor:pointer;
+}
+
+.themeBtn:hover{
+  transform:scale(1.05);
+}
+
+/* ============ menu baru =============== */
+.menuCard{
+    position:relative;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    padding:16px 18px;
+    margin-bottom:0;
+    margin-top: 10px;
+
+    background:var(--cardList);
+    border:1px solid var(--border);
+    border-radius:18px;
+
+    cursor:pointer;
+    transition:.2s;
+}
+
+.menuCard:hover{
+    transform:translateY(-1px);
+}
+
+.menuCard::before{
+    content:"";
+    width:4px;
+    height:36px;
+    border-radius:999px;
+
+    position:absolute;
+    left:12px;
+}
+
+.menuContent{
+    margin-left:14px;
+}
+
+.menuTitle{
+    font-weight:600;
+    font-size:16px;
+}
+
+.menuSubtitle{
+    margin-top:3px;
+    font-size:13px;
+    color:var(--textSecondary);
+}
+
+.menuArrow{
+    font-size:24px;
+    color:var(--text);
+}
+
+.masuk::before{
+    background:#22C55E;
+}
+
+.keluar::before{
+    background:#EF4444;
+}
+
+.transfer::before{
+    background:#3B82F6;
+}
+
+.kredit::before{
+    background:#F59E0B;
+}
+
+.import::before{
+    background:var(--text);
+}
+
+.scan::before{
+    background:var(--text);
+}
