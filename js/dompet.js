@@ -34,11 +34,7 @@ async function loadData() {
       localStorage.getItem("activeUser")
     );
 
-    const res = await fetch(
-      `${API}?mode=dompet&userId=${user.userId}`
-    );
-
-    dompetList = await res.json();
+    dompetList = await getDompet(user.userId);
 
     localStorage.setItem(
       "dompetCache",
@@ -180,25 +176,15 @@ async function simpanEditDompet(){
 
 
 
-  const res = await fetch(API, {
+  const hasil = await editDompet({
 
-    method: "POST",
+    id_sumber: editId,
 
-    body: JSON.stringify({
+    nama,
 
-      mode: "edit_dompet",
+    tipe
 
-      id_sumber: editId,
-
-      nama: nama,
-
-      tipe: tipe
-
-    })
   });
-
-  const hasil =
-    await res.json();
 
   if(hasil.ok){
 
