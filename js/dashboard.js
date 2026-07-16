@@ -385,19 +385,15 @@ async function loadDashboard(){
 
   try{
 
-    const res = await fetch(
-      API +
-      "?mode=dashboard&userId=" +
-      user.userId
-    );
-
-    const hasil =
-      await res.json();
+    const hasil = await getDashboard(user.userId);
 
     localStorage.setItem(
       "dashboard",
       JSON.stringify(hasil)
     );
+
+    console.log(hasil);
+console.log(hasil.dompet);
 
         // simpan daftar dompet
     if (hasil.dompet) {
@@ -530,30 +526,27 @@ async function hapusTransaksi(id){
 
   try{
 
-    const res = await fetch(API, {
-      method: "POST",
-      body: JSON.stringify({
-        mode: "hapusTransaksi",
-        id: id,
-        userId: user.userId
-      })
+        const { data, error } = await db.rpc("hapus_transaksi", {
+        p_id: id,
+        p_user: user.userId
     });
 
-    const hasil = await res.json();
+    if (error) throw error;
 
-    if(hasil.success){
-      
-      localStorage.removeItem("dompetCache");
+    if (data.success) {
 
-      sessionStorage.removeItem("dompet");
-      sessionStorage.removeItem("laporan");
-      localStorage.removeItem("dashboard");
-      showToast("Transaksi berhasil dihapus");
-      loadDashboard();
-    }else{
-      showToast(
-        hasil.msg || "Gagal menghapus transaksi"
-      );
+        sessionStorage.removeItem("dompet");
+        sessionStorage.removeItem("laporan");
+        localStorage.removeItem("dashboard");
+
+        showToast("Transaksi berhasil dihapus");
+
+        loadDashboard();
+
+    } else {
+
+        showToast(data.message);
+
     }
 
   }catch(err){

@@ -34,6 +34,8 @@ async function loadData() {
       localStorage.getItem("activeUser")
     );
 
+    console.log(user.userId);
+
     dompetList = await getDompet(user.userId);
 
     localStorage.setItem(
@@ -89,7 +91,7 @@ function render() {
           <b>Rp ${Number(d.saldo).toLocaleString("id-ID")}</b>
 
           <button
-            onclick="editDompet('${d.id_sumber}')"
+            onclick="editDompet('${d.id}')"
             class="btnEdit"
           >
             Edit
@@ -132,7 +134,7 @@ window.editDompet = function(id){
 
   const dompet =
     dompetList.find(d =>
-      String(d.id_sumber) === String(id)
+      String(d.id) === String(id)
     );
 
   if(!dompet) return;
@@ -176,15 +178,13 @@ async function simpanEditDompet(){
 
 
 
-  const hasil = await editDompet({
-
-    id_sumber: editId,
-
-    nama,
-
-    tipe
-
+  const hasil = await updateDompet({
+      id: editId,
+      nama,
+      tipe
   });
+
+  console.log("HASIL EDIT:", hasil);
 
   if(hasil.ok){
 

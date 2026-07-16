@@ -9,42 +9,128 @@ function post(data){
 // ===== DOMPET =====
 
 async function getDompet(userId){
+    try {
 
-    const {data,error}=await supabase
-        .from("sumber_dana")
-        .select("*")
-        .eq("id_user",userId);
+        const { data, error } = await db
+            .from("wallets")
+            .select("*")
+            .eq("id_user", userId);
 
-    return data;
+        console.log(data);
+        console.log(error);
+
+        if(error) throw error;
+
+        return data ?? [];
+
+    } catch(err) {
+        console.error("ERROR GET DOMPET:", err);
+        return [];
+    }
 }
 
-async function tambahDompet(dompet){
 
-    const {error}=await supabase
-        .from("sumber_dana")
-        .insert(dompet);
+async function tambahDompet(dompet) {
 
-    return !error;
+  const { data, error } = await db
+    .from("wallets")
+    .insert(dompet)
+    .select()
+    .single();
+
+  if (error) {
+    return {
+      ok: false,
+      error: error.message
+    };
+  }
+
+  return {
+    ok: true,
+    data
+  };
 }
 
-async function editDompet(data){
+async function updateDompet(data){
 
-    const {error}=await supabase
-        .from("sumber_dana")
+    const { error } = await db
+        .from("wallets")
         .update({
-
-            nama:data.nama,
-
-            tipe:data.tipe
-
+            nama: data.nama,
+            tipe: data.tipe
         })
-        .eq("id_sumber",data.id_sumber);
+        .eq("id", data.id);
 
     return {
-
-        ok:!error
-
+        ok: !error
     };
+}
+
+//================= dashboard =================
+
+async function getDashboard(userId){
+
+    try{
+
+        const { data, error } = await db.rpc(
+            "get_dashboard",
+            {
+                p_user: userId
+            }
+        );
+
+        if(error) throw error;
+
+        return data;
+
+    }catch(err){
+
+        console.error("ERROR GET DASHBOARD:", err);
+
+        return {
+            saldo: 0,
+            totalMasuk: 0,
+            totalKeluar: 0,
+            jumlahKredit: 0,
+            totalSisaKredit: 0,
+            dompet: [],
+            transaksi: []
+        };
+
+    }
 
 }
 
+// ===================== simpan pemasukan =======================
+
+async function simpanPemasukan() {
+
+    const data = {
+    p_id_user: id_user,
+    p_sumber_tujuan: sumber_tujuan,
+    p_kategori: kategori,
+    p_nominal: nominal,
+    p_catatan: catatan
+};
+
+const { data: hasil, error } =
+    await db.rpc("simpan_pemasukan", data);
+
+}
+
+// ===================== simpan pengeluaran =======================
+
+async function simpanPengeluaran() {
+
+    const data = {
+    p_id_user: id_user,
+    p_sumber_asal: sumber_asal,
+    p_kategori: kategori,
+    p_nominal: nominal,
+    p_catatan: catatan
+};
+
+const { data: hasil, error } =
+    await db.rpc("simpan_pengeluaran", data);
+
+}
