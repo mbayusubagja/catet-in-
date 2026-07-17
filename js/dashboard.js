@@ -108,25 +108,14 @@ function syncToggleSaldo() {
 // ================== parse tanggal ===============
 function parseTanggal(trx){
 
-  // timestamp baru
-  if(trx.timestamp){
-
-    return new Date(
-      Number(trx.timestamp)
-    );
+  // Data Supabase
+  if(trx.tanggal){
+    return new Date(trx.tanggal);
   }
 
-  // data lama
-  if(trx.tanggal){
-
-    const pecah =
-      trx.tanggal.split("-");
-
-    return new Date(
-      Number(pecah[0]),
-      Number(pecah[1]) - 1,
-      Number(pecah[2])
-    );
+  // Data lama Apps Script (timestamp)
+  if(trx.timestamp){
+    return new Date(Number(trx.timestamp));
   }
 
   return new Date();
@@ -231,8 +220,8 @@ saldoDisembunyikan =
     hasil.transaksi || [];
 
   transaksi.sort((a, b) =>
-    (b.timestamp || 0) -
-    (a.timestamp || 0)
+    (b.tanggal || 0) -
+    (a.tanggal || 0)
   );
 
   if(transaksi.length === 0){
@@ -480,9 +469,9 @@ function formatTanggal(trx){
 
   // ================= DATA BARU =================
 
-  if(trx.timestamp){
+  if(trx.tanggal){
 
-    return new Date(trx.timestamp)
+    return new Date(trx.tanggal)
       .toLocaleString("id-ID", {
 
         timeZone: "Asia/Jakarta",

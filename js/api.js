@@ -134,3 +134,36 @@ const { data: hasil, error } =
     await db.rpc("simpan_pengeluaran", data);
 
 }
+
+// ================ get laporan ================================
+async function getLaporan(userId){
+
+    try{
+
+        const { data, error } = await db.rpc(
+            "get_laporan",
+            {
+                p_user: userId
+            }
+        );
+
+        if(error) throw error;
+
+        return data;
+
+    }catch(err){
+
+        console.error(err);
+
+        return {
+            summary:{
+                saldo:0,
+                masuk:0,
+                keluar:0
+            },
+            bulan:{}
+        };
+
+    }
+
+}
