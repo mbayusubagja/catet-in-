@@ -191,15 +191,9 @@ function renderKategori(data){
       kategoriMap[kategoriKey] = {
 
         nama:
-          kategoriAsli
-            .toLowerCase()
-            .split(" ")
-            .map(kata =>
-              kata.charAt(0)
-                .toUpperCase() +
-              kata.slice(1)
-            )
-            .join(" "),
+              kategoriAsli
+              .trim()
+              .replace(/\b\w/g, c => c.toUpperCase()),
 
         jenis: trx.jenis,
 

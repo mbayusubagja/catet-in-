@@ -253,34 +253,28 @@ let semuaKategori = [];
 
 async function loadKategori(jenis){
 
-  const user = JSON.parse(
-    sessionStorage.getItem("user") ||
-    localStorage.getItem("user") ||
-    localStorage.getItem("activeUser")
-  );
+    const user = JSON.parse(
+        sessionStorage.getItem("user") ||
+        localStorage.getItem("user") ||
+        localStorage.getItem("activeUser")
+    );
 
-  try{
+    const { data, error } = await db
+        .from("categories")
+        .select("nama_kategori")
+        .eq("id_user", user.userId)
+        .eq("jenis", jenis)
+        .order("nama_kategori");
 
-    const url =
-      API +
-      "?mode=get_kategori&userId=" +
-      user.userId +
-      "&jenis=" +
-      jenis;
+         console.log(data);
+    console.log(error);
 
-    const res = await fetch(url);
-    const data = await res.json();
-
-    if(!Array.isArray(data)){
-      console.error("Response bukan array:", data);
-      return;
+    if(error){
+        console.error(error);
+        return;
     }
 
-    semuaKategori = data.filter(k => k);
-
-  }catch(err){
-    console.error("loadKategori error:", err);
-  }
+    semuaKategori = data.map(x => x.nama_kategori);
 }
 
 // ================== click diluar kategori =================

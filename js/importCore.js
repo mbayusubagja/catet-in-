@@ -76,13 +76,13 @@ async function loadDompet(provider){
 
 async function loadProfil(){
 
-    const res = await fetch(
-        API + "?mode=getProfil&id_user=" + user.userId
-    );
+    const { data } = await db
+        .from("users")
+        .select("nama")
+        .eq("id_user", user.userId)
+        .single();
 
-    const r = await res.json();
-
-    namaUserNormal = normal(r.data?.nama || "");
+    namaUserNormal = normal(data?.nama ?? "");
 
 }
 
