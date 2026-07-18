@@ -33,42 +33,27 @@ async function loadKategori(){
 // =================== load dompet ========================
 async function loadDompet(provider){
 
-    const res = await fetch(API,{
-        method:"POST",
-        body:JSON.stringify({
-            mode:"getDompet",
-            userId:user.userId
-        })
-    });
+    daftarDompet = await getDompet(user.userId);
 
-    const data = await res.json();
+    const select = document.getElementById("dompetSelect");
 
-    daftarDompet = data;
+    if(!select) return;
 
-    const select =
-        document.getElementById("dompetSelect");
-
-    if (!select) {
-        console.error("dompetSelect belum ada");
-        return;
-    }
-    
     select.innerHTML = "";
 
-    data.forEach(dompet=>{
+    daftarDompet.forEach(dompet => {
 
-        const option =
-            document.createElement("option");
+        const option = document.createElement("option");
 
-        option.value = dompet.id_sumber;
-        option.textContent = `${dompet.nama} - Rp ${dompet.saldo.toLocaleString("id-ID")}`;
+        option.value = dompet.id;
+        option.textContent =
+            `${dompet.nama} - Rp ${dompet.saldo.toLocaleString("id-ID")}`;
 
         select.appendChild(option);
 
     });
 
-    // otomatis pilih sesuai provider
-    const cocok = data.find(d => {
+    const cocok = daftarDompet.find(d => {
 
         const nama = d.nama.toLowerCase();
 
@@ -80,11 +65,11 @@ async function loadDompet(provider){
     });
 
     if(cocok){
-
-        select.value = cocok.id_sumber;
-
+        select.value = cocok.id;
     }
 
+    console.log("Daftar dompet:", daftarDompet);
+    console.log("Value select:", select.value);
 }
 
 // ==================== load profil ========================
@@ -245,12 +230,12 @@ function isiDompetTujuan(select, trx){
 
     daftarDompet.forEach(dompet=>{
 
-        if(dompet.id_sumber == trx.dompet){
+        if(dompet.id == trx.dompet){
             return;
         }
 
         html += `
-            <option value="${dompet.id_sumber}">
+            <option value="${dompet.id}">
                 ${dompet.nama}
             </option>
         `;

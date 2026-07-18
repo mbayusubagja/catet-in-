@@ -167,3 +167,19 @@ async function getLaporan(userId){
     }
 
 }
+
+// ===================== immport transaksi =====================
+async function importTransaksi(userId, transaksi){
+
+    const { data, error } = await db.rpc(
+        "import_transaksi",
+        {
+            p_user: userId,
+            p_transaksi: transaksi
+        }
+    );
+
+    if(error) throw error;
+
+    return data;
+}
