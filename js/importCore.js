@@ -13,20 +13,24 @@ async function loadKategori(){
 
     for(const jenis of ["masuk","keluar","transfer"]){
 
-        const res = await fetch(API,{
-            method:"POST",
-            body:JSON.stringify({
-                mode:"getKategori",
-                userId:user.userId,
-                jenis:jenis
-            })
-        });
+        const { data, error } = await db
+            .from("categories")
+            .select("nama_kategori")
+            .eq("id_user", user.userId)
+            .eq("jenis", jenis)
+            .order("nama_kategori");
 
-        const hasil = await res.json();
+        if(error){
+            console.error(error);
+            kategoriUser[jenis] = [];
+            continue;
+        }
 
-        kategoriUser[jenis] = hasil;
+        kategoriUser[jenis] = data.map(item => item.nama_kategori);
 
     }
+
+    console.log(kategoriUser);
 
 }
 
