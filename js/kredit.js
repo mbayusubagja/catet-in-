@@ -615,20 +615,20 @@ async function bayarKredit(idKredit, idDompet, nominal) {
   try {
 
     const { data, error } =
-await db.rpc("bayar_kredit",{
+    await db.rpc("bayar_kredit",{
 
-    p_user:user.userId,
-    p_credit:idKredit,
-    p_wallet:idDompet,
-    p_nominal:nominal
+        p_user:user.userId,
+        p_credit:idKredit,
+        p_wallet:idDompet,
+        p_nominal:nominal
 
-});
+    });
 
-if(error) throw error;
+    if(error) throw error;
 
-if(!data.success){
-    throw new Error(data.message);
-}
+    if(!data.success){
+        throw new Error(data.message);
+    }
 
 // ================= sukses =================
 
