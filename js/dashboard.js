@@ -568,62 +568,108 @@ window.open(link, "_blank");
 
 }
 
+// ================ cek profil user ================
+async function cekProfilUser(){
+
+    try {
+
+        const {
+            data: profil,
+            error
+        } = await db
+            .from("users")
+            .select("nama, gmail")
+            .eq("id_user", user.userId)
+            .single();
+
+        if(error){
+            console.error(
+                "Gagal mengecek profil:",
+                error
+            );
+
+            return null;
+        }
+
+        if(
+            !profil.nama ||
+            !profil.gmail
+        ){
+
+            showToast(
+                "Profil belum lengkap. Silakan isi nama dan Gmail di menu Profil."
+            );
+
+        }
+
+        return profil;
+
+    } catch(err){
+
+        console.error(
+            "Gagal mengecek profil:",
+            err
+        );
+
+        return null;
+    }
+
+}
+
 // ================= LOAD =================
 
 document.addEventListener("DOMContentLoaded", async () => {
 
-  loadThemeDashboard();
+    loadThemeDashboard();
 
-syncToggleSaldo();
+    syncToggleSaldo();
 
-  const pesan = sessionStorage.getItem("toastMessage");
+    const pesan =
+        sessionStorage.getItem("toastMessage");
 
-  if (pesan) {
-    showToast(pesan);
-    sessionStorage.removeItem("toastMessage");
-  }
+    if (pesan) {
 
-  if (user) {
+        showToast(pesan);
 
-    const res = await fetch(
-      API + "?mode=getProfil&id_user=" + user.userId
-    );
+        sessionStorage.removeItem(
+            "toastMessage"
+        );
 
-    const r = await res.json();
-
-    if (r.ok) {
-
-      const profil = r.data;
-
-      if (!profil.nama || !profil.gmail) {
-
-        showToast("Lengkapi profil terlebih dahulu");
-
-        setTimeout(() => {
-          location.href = "profil.html";
-        }, 1000);
-
-        return;
-      }
-
-      document.getElementById("userInfo").innerHTML =
-        `<b>${(profil.nama || user.noHp)
-          .toLowerCase()
-          .replace(/\b\w/g, c => c.toUpperCase())}, silakan catat keuanganmu.</b>`;
     }
 
-  }
+    // Ambil profil dari Supabase
+    const profil =
+        await cekProfilUser();
 
-  const btn = document.getElementById("btnToggleSaldo");
+    // Tampilkan nama user
+    const namaTampil =
+        profil?.nama ||
+        user.noHp;
 
-  if (btn) {
-    btn.textContent =
-      saldoDisembunyikan
-        ? "🙈"
-        : "👁";
-  }
+    document.getElementById(
+        "userInfo"
+    ).innerHTML =
+        `<b>${namaTampil
+            .toLowerCase()
+            .replace(/\b\w/g, c =>
+                c.toUpperCase()
+            )}, silakan catat keuanganmu.</b>`;
 
-  await loadDashboard();
+    const btn =
+        document.getElementById(
+            "btnToggleSaldo"
+        );
+
+    if (btn) {
+
+        btn.textContent =
+            saldoDisembunyikan
+                ? "🙈"
+                : "👁";
+
+    }
+
+    await loadDashboard();
 
 });
 

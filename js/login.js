@@ -89,16 +89,27 @@ async function login(){
 
   try{
 
-    const res = await fetch(API, {
-      method:"POST",
-      body: JSON.stringify({
-        mode:"login",
-        noHp,
-        password
-      })
-    });
+    const passHash =
+      await hashPassword(password);
 
-    const hasil = await res.json();
+    const { data, error } =
+      await db.rpc("login_user", {
+        p_no_hp: noHp,
+        p_pass_hash: passHash
+      });
+
+    if (error) {
+      console.error(error);
+      status("Terjadi kesalahan saat login");
+
+      loginBtn.disabled = false;
+      registerBtn.disabled = false;
+      loginBtn.innerText = "Login";
+
+      return;
+    }
+
+    const hasil = data;
 
     const activeUserId =
       localStorage.getItem("activeUserId");
@@ -210,72 +221,136 @@ async function login(){
 
 async function register(){
 
-  const error = validasi();
-  if(error){
-    status(error);
-    return;
-  }
 
-  const registerBtn = document.getElementById("registerBtn");
+    const error = validasi();
 
-  const noHpRaw = document.getElementById("noHp").value.trim();
-  const noHp = formatNomorHP(noHpRaw);
-  const password = document.getElementById("password").value.trim();
-
-  status("Sedang register...");
-
-  // 🔥 disable tombol
-  registerBtn.disabled = true;
-  loginBtn.disabled = true;
-
-  registerBtn.innerText = "Memproses...";
-
-  try{
-
-    const res = await fetch(API, {
-      method:"POST",
-      body: JSON.stringify({
-        mode:"register",
-        noHp,
-        password
-      })
-    });
-
-    const hasil = await res.json();
-
-    if(!hasil.ok){
-
-      status(hasil.message || "Register gagal");
-
-      // 🔥 enable lagi kalau gagal
-      registerBtn.disabled = false;
-      loginBtn.disabled = false;
-
-      registerBtn.innerText = "Register";
-
-      return;
+    if(error){
+        status(error);
+        return;
     }
 
-    status("Register berhasil");
+    const registerBtn =
+        document.getElementById("registerBtn");
 
-    // 🔥 enable lagi setelah sukses
-    registerBtn.disabled = false;
-    loginBtn.disabled = false;
+    const loginBtn =
+        document.getElementById("loginBtn");
 
-    registerBtn.innerText = "Register";
+    const noHpRaw =
+        document.getElementById("noHp")
+        .value
+        .trim();
 
-  }catch(err){
+    const noHp =
+        formatNomorHP(noHpRaw);
 
-    status("Tidak dapat terhubung ke server");
+    const password =
+        document.getElementById("password")
+        .value
+        .trim();
 
-    console.error(err);
+    status("Sedang register...");
 
-    // 🔥 enable lagi kalau error
-    registerBtn.disabled = false;
-    loginBtn.disabled = false;
+    // Disable tombol
+    registerBtn.disabled = true;
+    loginBtn.disabled = true;
 
-    registerBtn.innerText = "Register";
-  }
+    registerBtn.innerText = "Memproses...";
+
+    try{
+
+        // =========================
+        // Hash password
+        // =========================
+
+        const passHash =
+            hashPassword(password);
+
+
+        // =========================
+        // Register ke Supabase
+        // =========================
+
+        const { data, error } =
+            await db.rpc(
+                "register_user",
+                {
+                    p_no_hp: noHp,
+                    p_pass_hash: passHash
+                }
+            );
+
+
+        // =========================
+        // Error Supabase
+        // =========================
+
+        if(error){
+
+            console.error(error);
+
+            status(
+                error.message ||
+                "Terjadi kesalahan saat register"
+            );
+
+            return;
+        }
+
+
+        // =========================
+        // Register gagal
+        // =========================
+
+        if(!data || !data.ok){
+
+            status(
+                data?.message ||
+                "Register gagal"
+            );
+
+            return;
+        }
+
+
+        // =========================
+        // Register berhasil
+        // =========================
+
+        status(
+            data.message ||
+            "Register berhasil"
+        );
+
+        // Bersihkan input
+        document.getElementById("password")
+            .value = "";
+
+        document.getElementById("noHp")
+            .value = "";
+
+
+    }catch(err){
+
+        console.error(err);
+
+        status(
+            "Tidak dapat terhubung ke server"
+        );
+
+    }finally{
+
+        // =========================
+        // Aktifkan tombol kembali
+        // =========================
+
+        registerBtn.disabled = false;
+        loginBtn.disabled = false;
+
+        registerBtn.innerText = "Register";
+
+    }
+
+
 }
 
 
@@ -527,4 +602,9 @@ function formatNomorHP(input) {
   }
 
   return nomor;
+}
+
+// =========================== pass hash 256 ======================
+function hashPassword(password) {
+    return sha256(password);
 }
