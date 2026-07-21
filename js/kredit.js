@@ -570,7 +570,8 @@ return;
 try{
 
     const { data, error } = await db.rpc("hapus_kredit",{
-        p_credit:idKredit
+        p_credit:idKredit,
+        p_user: user.userId
     });
 
     if(error) throw error;
